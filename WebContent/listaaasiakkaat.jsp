@@ -39,6 +39,7 @@
 </table>
 <script>
 $(document).ready(function(){
+	/*
 	$.ajax({ 
 		// WebServletin osoite
 		url:"asiakkaat", 
@@ -48,6 +49,7 @@ $(document).ready(function(){
 			console.log(result);
 		}
 	});
+	*/
 	// klikki 
 	haeAsiakkaat();
 	$("#hakunappi").click(function() {

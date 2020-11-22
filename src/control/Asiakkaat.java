@@ -28,24 +28,21 @@ public class Asiakkaat extends HttpServlet {
     public Asiakkaat() {
         super();
         // TODO Auto-generated constructor stub
-        System.out.println("TESTI");
-        System.out.println("Asiakkaat.Asiakkaat()");
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Asiakkaat.doGet()");
 		
 		// haetaan kutsun polkutiedot
 		String pathInfo = request.getPathInfo();
-		System.out.println("polku: "+ pathInfo);
+		// System.out.println("polku: "+ pathInfo);
 		String hakusana = pathInfo.replace("/","");
 		
 		Dao dao = new Dao();
 		ArrayList<Asiakas> asiakkaat = dao.listaaKaikki(hakusana);
-		System.out.println(asiakkaat);
+		// System.out.println(asiakkaat);
 		
 		// JSON data stringiksi 
 		String json = new JSONObject().put("asiakkaat", asiakkaat).toString();

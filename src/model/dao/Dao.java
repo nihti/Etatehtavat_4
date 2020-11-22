@@ -25,10 +25,10 @@ public class Dao {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(url);
-			System.out.println("Yhteys avattu!");
+			// System.out.println("Yhteys avattu!");
 			
 		} catch (Exception e) {
-			System.out.println("Yhteyden avaus epäonnistui :(");
+			// System.out.println("Yhteyden avaus epäonnistui :(");
 			e.printStackTrace();
 		}
 		
