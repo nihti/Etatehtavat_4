@@ -6,12 +6,23 @@
 <meta charset="ISO-8859-1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Insert title here</title>
+<style>
+	thead {
+		background: lightgreen;
+	}
+	tbody tr:nth-child(even) {
+		background: lightgrey;
+	}
+	.right {
+		text-align: right;
+	}
+</style>
 </head>
 <body>
 <table id="listaus">
-	<thead style="background: lightgreen;">	
+	<thead>	
 		<tr>
-			<th colspan="2" style="text-align: right;">Hakusana: </th>
+			<th colspan="2" class="right">Hakusana: </th>
 			<th colspan="2"><input type="text" id="hakusana"></th>
 			<th><input type="button" value="hae" id="hakunappi"></th>
 		</tr>			
