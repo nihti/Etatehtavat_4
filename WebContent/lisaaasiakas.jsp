@@ -63,11 +63,11 @@ $(document).ready(function() {
 			},
 			puhelin: {
 				required: true,
-				minlength: 2
+				minlength: 9
 			},
 			sposti: {
 				required: true,
-				minlength: 3,
+				email: true
 			}
 		},
 		messages: {
@@ -90,56 +90,9 @@ $(document).ready(function() {
 			},
 			sposti: {
 				required: "Puuttuu",
-				minlength: "Liian lyhyt"
+				email: "Ei ole sähköposti"
 			}
 		},
-		//rules: {
-			
-/*			asiakas_id: {
-				required: true,
-				number: true,
-				minlength: 1
-			},
-			etunimi: {
-				required: true,
-				minlength: 2
-			},
-			sukunimi: {
-				required: true,
-				minlength: 2
-			},
-			puhelin: {
-				required: true,
-				minlenght: 2
-			},
-			sposti: {
-				required: true,
-				minlength: 4,
-			}
-		},
-		messages: {
-			asiakas_id: {
-				required: "Puuttuu",
-				minlength: "Liian lyhyt",
-				number: "Ei ole numero"
-			},
-			etunimi: {
-				required: "Puuttuu",
-				minlength: "Liian lyhyt"
-			},
-			sukunimi: {
-				required: "Puuttuu",
-				minlength: "Liian lyhyt"
-			},
-			puhelin: {
-				required: "Puuttuu",
-				minlength: "Liian lyhyt"
-			},
-			sposti: {
-				required: "Puuttuu",
-				minlength: "Liian lyhyt"
-			}
-		}, */
 		// lopuksi kutsutaan lisaaTiedot() functiota
 		submitHandler: function(form) {	
 			lisaaTiedot();
