@@ -20,7 +20,10 @@
 </head>
 <body>
 <table id="listaus">
-	<thead>	
+	<thead>
+		<tr>
+			<th colspan="5" class="right"><span id="lisaaasiakas">Lis‰‰ asiakas</span></th>
+		</tr>	
 		<tr>
 			<th colspan="2" class="right">Hakusana: </th>
 			<th colspan="2"><input type="text" id="hakusana"></th>
@@ -50,6 +53,10 @@ $(document).ready(function(){
 		}
 	});
 	*/
+	// lis‰‰ asiakas
+	$("#lisaaasiakas").click(function() {
+		document.location="lisaaasiakas.jsp";
+	});
 	// klikki 
 	haeAsiakkaat();
 	$("#hakunappi").click(function() {

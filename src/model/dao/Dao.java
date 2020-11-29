@@ -104,4 +104,26 @@ public class Dao {
 		
 		return asiakkaat;
 	}
+	
+	public boolean lisaaAsiakas(Asiakas asiakas) {
+		boolean paluuArvo = true;
+		sql = "INSERT INTO asiakkaat VALUES(?,?,?,?,?)";
+		
+		try {
+			con = yhdista();
+			prep = con.prepareStatement(sql);
+			prep.setInt(1, asiakas.getAsiakas_id());
+			prep.setString(2, asiakas.getEtunimi());
+			prep.setString(3, asiakas.getSukunimi());
+			prep.setString(4, asiakas.getPuhelin());
+			prep.setString(5, asiakas.getSposti());
+			prep.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			paluuArvo=false;
+		}
+		
+		return paluuArvo;	
+	}
 }
