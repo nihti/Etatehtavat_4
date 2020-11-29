@@ -90,7 +90,22 @@ public class Asiakkaat extends HttpServlet {
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		System.out.println("Asiakkaat.doDelete()");
+		String pathInfo = request.getPathInfo();
+		System.out.println("polku: "+ pathInfo);
+		String poistettavaAsiakas = pathInfo.replace("/","");
+		
+		Dao dao = new Dao();
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
+		
+		if (dao.poistaAsiakas(poistettavaAsiakas)) { //metodi palauttaa true/false
+			out.println("{\"response\":1}");  //Auton poistaminen onnistui {"response":1}
+		} else {
+			out.println("{\"response\":0}");  //Auton poistaminen epäonnistui {"response":0}
+		}
+
 	}
 
 }

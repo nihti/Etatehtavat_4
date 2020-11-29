@@ -1,9 +1,13 @@
 	thead {
-		background: lightgreen;
+		background: green;
+		color: #FFF;
 	}
 	tbody tr:nth-child(even) {
 		background: lightgrey;
 	}
 	.right {
 		text-align: right;
+	}
+	.poista {
+		color: red;
 	}

@@ -126,4 +126,25 @@ public class Dao {
 		
 		return paluuArvo;	
 	}
+	
+	public boolean poistaAsiakas(String asiakas_id){ 
+		
+		boolean paluuArvo=true;
+		// Poisto SQL lauseke: DELETE
+		// Oikeassa el‰m‰ss‰ tiedot merkit‰‰n poistettavaksi
+		sql="DELETE FROM asiakkaat WHERE asiakas_id=?";						  
+		
+		try {
+			con = yhdista();
+			prep=con.prepareStatement(sql); 
+			prep.setString(1, asiakas_id);			
+			prep.executeUpdate();
+	        con.close();
+		} catch (Exception e) {				
+			e.printStackTrace();
+			paluuArvo=false;
+		}				
+		
+		return paluuArvo;
+	}	
 }
