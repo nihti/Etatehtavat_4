@@ -38,17 +38,36 @@ public class Asiakkaat extends HttpServlet {
 		// haetaan kutsun polkutiedot
 		String pathInfo = request.getPathInfo();
 		// System.out.println("polku: "+ pathInfo);
-		String hakusana = pathInfo.replace("/","");
-		
 		Dao dao = new Dao();
-		ArrayList<Asiakas> asiakkaat = dao.listaaKaikki(hakusana);
-		// System.out.println(asiakkaat);
-		
-		// JSON data stringiksi 
-		String json = new JSONObject().put("asiakkaat", asiakkaat).toString();
+		ArrayList<Asiakas> asiakkaat;
+		String json = "";
+		// REST konventio: hae data myös ilman kauttaviivaa urlin lopussa
+		if (pathInfo == null) {
+			asiakkaat = dao.listaaKaikki();
+			json = new JSONObject().put("asiakkaat", asiakkaat).toString();
+			// indexOf hakee merkkijonoa merkkijonon sisällä
+			// pathinfo = merkkijono, indexOf("haeasiakas") = merkkijono merkkijonon sisässä
+			// -1 if it never occurs eli != -1 on sama kuin ei ei koskaan
+		} else if (pathInfo.indexOf("haeasiakas") != -1) {
+			// poistetaan pathin "kansio-osa"
+			String asiakasid = pathInfo.replace("/haeasiakas/", "");
+			Asiakas asiakas = dao.etsiAsiakas(asiakasid);
+			JSONObject jos = new JSONObject();
+			jos.put("asiakas_id", asiakas.getAsiakas_id());
+			jos.put("etunimi", asiakas.getEtunimi());
+			jos.put("sukunimi", asiakas.getSukunimi());
+			jos.put("puhelin", asiakas.getPuhelin());
+			jos.put("sposti", asiakas.getSposti());
+			json = jos.toString();
+		} else {
+			// hakusana lopussa
+			String hakusana = pathInfo.replace("/","");
+			asiakkaat = dao.listaaKaikki(hakusana);
+			json = new JSONObject().put("asiakkaat", asiakkaat).toString();
+
+		}
 		
 		response.setContentType("application/json");
-		
 		PrintWriter out = response.getWriter();
 		out.println(json);
 	}
@@ -83,7 +102,28 @@ public class Asiakkaat extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//System.out.println("DOPUT");
+		JSONObject jsonObj = new JsonStrToObj().convert(request); 
+		//Muutetaan kutsun mukana tuleva json-string json-objektiksi
+		
+		String oldid = jsonObj.getString("old_id");
+		Asiakas asiakas = new Asiakas();
+		
+		asiakas.setAsiakas_id(jsonObj.getInt("asiakas_id"));
+		asiakas.setEtunimi(jsonObj.getString("etunimi"));
+		asiakas.setSukunimi(jsonObj.getString("sukunimi"));
+		asiakas.setPuhelin(jsonObj.getString("puhelin"));
+		asiakas.setSposti(jsonObj.getString("sposti"));
+		response.setContentType("application/json");
+		
+		PrintWriter out = response.getWriter();
+		Dao dao = new Dao();
+		
+		if (dao.muutaAsiakastiedot(asiakas, Integer.parseInt(oldid))) {
+			out.println("{\"response\":1}");
+		} else {
+			out.println("{\"response\":0}");
+		}
 	}
 
 	/**

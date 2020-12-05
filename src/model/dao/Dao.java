@@ -35,6 +35,7 @@ public class Dao {
 		return con;
 	}
 	
+	// Otetaan jälleen alkuperäinen metodi käyttöön
 	public ArrayList<Asiakas> listaaKaikki() {
 		ArrayList<Asiakas> asiakkaat = new ArrayList<Asiakas>();
 		sql = "SELECT * FROM asiakkaat";
@@ -146,5 +147,61 @@ public class Dao {
 		}				
 		
 		return paluuArvo;
-	}	
+	}
+	
+	public Asiakas etsiAsiakas(String asiakasid) {
+		Asiakas asiakas = null;
+		sql = "SELECT * FROM asiakkaat WHERE asiakas_id=?";
+		
+		try {
+			con = yhdista();
+			
+			if (con!=null) {
+				prep = con.prepareStatement(sql);
+				// asiakasid pitää muuttaa kantakyselyä varten stringistä numeroksi
+				prep.setInt(1, Integer.parseInt(asiakasid));
+				rs = prep.executeQuery();
+				// jos kysely tuotti dataa
+				if (rs.isBeforeFirst()) {
+					rs.next();
+					// luodaan palautettava asiakasobjekti
+					asiakas = new Asiakas();
+					// asetetaan sille arvot
+					asiakas.setAsiakas_id(rs.getInt(1));
+					asiakas.setEtunimi(rs.getString(2));
+					asiakas.setSukunimi(rs.getString(3));
+					asiakas.setPuhelin(rs.getString(4));
+					asiakas.setSposti(rs.getString(5));
+				}
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return asiakas;
+	}
+	
+	public boolean muutaAsiakastiedot(Asiakas asiakas, int oldid) {
+		boolean paluuArvo = true;
+		sql = "UPDATE asiakkaat SET asiakas_id=?, etunimi=?, sukunimi=?, puhelin=?, sposti=? WHERE asiakas_id=?";
+		
+		try {
+			con = yhdista();
+			prep = con.prepareStatement(sql);
+			prep.setInt(1, asiakas.getAsiakas_id());
+			prep.setString(2, asiakas.getEtunimi());
+			prep.setString(3, asiakas.getSukunimi());
+			prep.setString(4, asiakas.getPuhelin());
+			prep.setString(5, asiakas.getSposti());
+			prep.setInt(6, oldid);
+			prep.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			paluuArvo = false; 
+		}
+		
+		return paluuArvo;
+	}
 }
