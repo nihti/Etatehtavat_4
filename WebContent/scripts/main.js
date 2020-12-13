@@ -15,3 +15,14 @@ function formDataJsonStr(formArray) {
 	}
 	return JSON.stringify(returnArray);
 }
+function tutkiKey(event) {
+	if (event.keyCode==13) {
+		haeAsiakkaat();
+	}
+}
+function siivoa(teksti){
+	teksti=teksti.replace("<","");
+	teksti=teksti.replace(";","");
+	teksti=teksti.replace("'","''");
+	return teksti;
+}

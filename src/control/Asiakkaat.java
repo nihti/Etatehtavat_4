@@ -52,13 +52,18 @@ public class Asiakkaat extends HttpServlet {
 			// poistetaan pathin "kansio-osa"
 			String asiakasid = pathInfo.replace("/haeasiakas/", "");
 			Asiakas asiakas = dao.etsiAsiakas(asiakasid);
-			JSONObject jos = new JSONObject();
-			jos.put("asiakas_id", asiakas.getAsiakas_id());
-			jos.put("etunimi", asiakas.getEtunimi());
-			jos.put("sukunimi", asiakas.getSukunimi());
-			jos.put("puhelin", asiakas.getPuhelin());
-			jos.put("sposti", asiakas.getSposti());
-			json = jos.toString();
+			if (asiakas == null) {
+				// palauttaa tyhjän objektin
+				json = "{}";
+			} else {
+				JSONObject jos = new JSONObject();
+				jos.put("asiakas_id", asiakas.getAsiakas_id());
+				jos.put("etunimi", asiakas.getEtunimi());
+				jos.put("sukunimi", asiakas.getSukunimi());
+				jos.put("puhelin", asiakas.getPuhelin());
+				jos.put("sposti", asiakas.getSposti());
+				json = jos.toString();
+			}
 		} else {
 			// hakusana lopussa
 			String hakusana = pathInfo.replace("/","");
